@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./Header.css";
-import { BiMenuAltRight } from "react-icons/bi";
+import { BiMenuAltRight, BiHomeAlt } from "react-icons/bi";
 import { getMenuStyles } from "../../utils/common";
 import useHeaderColor from "../../hooks/useHeaderColor";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -27,8 +27,9 @@ const Header = () => {
     <section className="h-wrapper" style={{ background: headerColor }}>
       <div className="flexCenter innerWidth paddings h-container">
         {/* logo */}
-        <Link to="/">
-          <img src="./logo.png" alt="logo" width={100} />
+        <Link to="/" className="flexCenter" style={{ gap: "0.5rem", textDecoration: "none", color: "white", flexWrap: "nowrap" }}>
+          <BiHomeAlt size={28} color="var(--blue)" />
+          <span style={{ fontSize: "1.35rem", fontWeight: "700", color: "white", letterSpacing: "0.5px" }}>YourFutureHome</span>
         </Link>
 
         {/* menu */}

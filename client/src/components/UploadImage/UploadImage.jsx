@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import { AiOutlineCloudUpload } from "react-icons/ai";
 import "./UploadImage.css";
 import { Button, Group } from "@mantine/core";
+const DEFAULT_IMAGE_URL = "https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80";
+
 const UploadImage = ({
   propertyDetails,
   setPropertyDetails,
@@ -12,7 +14,7 @@ const UploadImage = ({
   const cloudinaryRef = useRef();
   const widgetRef = useRef();
   const handleNext = () => {
-    setPropertyDetails((prev) => ({ ...prev, image: imageURL }));
+    setPropertyDetails((prev) => ({ ...prev, image: imageURL || DEFAULT_IMAGE_URL }));
     nextStep();
   };
   useEffect(() => {
@@ -38,7 +40,7 @@ const UploadImage = ({
           onClick={() => widgetRef.current?.open()}
         >
           <AiOutlineCloudUpload size={50} color="grey" />
-          <span>Upload Image</span>
+          <span>Upload Image (Optional)</span>
         </div>
       ) : (
         <div
@@ -53,7 +55,7 @@ const UploadImage = ({
         <Button variant="default" onClick={prevStep}>
           Back
         </Button>
-        <Button onClick={handleNext} disabled={!imageURL}>
+        <Button onClick={handleNext}>
           Next
         </Button>
       </Group>
