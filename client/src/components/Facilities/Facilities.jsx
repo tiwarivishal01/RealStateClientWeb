@@ -1,4 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useUser } from "@clerk/clerk-react";
 import { Box, Button, Group, NumberInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import React, { useContext } from "react";
@@ -41,7 +41,8 @@ const Facilities = ({
   };
 
   // ==================== upload logic
-  const { user } = useAuth0();
+  const { user } = useUser();
+  const email = user?.primaryEmailAddress?.emailAddress;
   const {
     userDetails: { token },
   } = useContext(UserDetailContext);
@@ -49,7 +50,9 @@ const Facilities = ({
 
   const {mutate, isLoading} = useMutation({
     mutationFn: ()=> createResidency({
-        ...propertyDetails, facilities: {bedrooms, parkings , bathrooms},
+        ...propertyDetails, 
+        facilities: {bedrooms, parkings , bathrooms},
+        userEmail: email,
     }, token),
     onError: ({ response }) => toast.error(response.data.message, {position: "bottom-right"}),
     onSettled: ()=> {
@@ -67,7 +70,7 @@ const Facilities = ({
           parkings: 0,
           bathrooms: 0,
         },
-        userEmail: user?.email,
+        userEmail: email,
       })
       setOpened(false)
       setActiveStep(0)

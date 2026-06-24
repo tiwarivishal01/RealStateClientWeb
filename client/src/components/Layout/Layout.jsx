@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import { Outlet } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth, useUser } from "@clerk/clerk-react";
 import UserDetailContext from "../../context/UserDetailContext";
 import { useMutation } from "react-query";
 import { createUser } from "../../utils/api";
@@ -14,31 +14,37 @@ const Layout = () => {
   useFavourites()
   useBookings()
 
-  const { isAuthenticated, user, getAccessTokenWithPopup } = useAuth0();
+  const { isSignedIn, getToken } = useAuth();
+  const { user } = useUser();
   const { setUserDetails } = useContext(UserDetailContext);
 
+  const email = user?.primaryEmailAddress?.emailAddress;
+
   const { mutate } = useMutation({
-    mutationKey: [user?.email],
-    mutationFn: (token) => createUser(user?.email, token),
+    mutationKey: [email],
+    mutationFn: (token) => createUser(email, token),
   });
 
   useEffect(() => {
-    const getTokenAndRegsiter = async () => {
-
-      const res = await getAccessTokenWithPopup({
-        authorizationParams: {
-          audience: "http://localhost:8000",
-          scope: "openid profile email",
-        },
-      });
-      localStorage.setItem("access_token", res);
-      setUserDetails((prev) => ({ ...prev, token: res }));
-      mutate(res)
+    const getTokenAndRegister = async () => {
+      try {
+        const res = await getToken();
+        if (res) {
+          localStorage.setItem("access_token", res);
+          setUserDetails((prev) => ({ ...prev, token: res }));
+          mutate(res);
+        }
+      } catch (error) {
+        console.error("Error getting token:", error);
+      }
     };
 
-
-    isAuthenticated && getTokenAndRegsiter();
-  }, [isAuthenticated]);
+    if (isSignedIn && email) {
+      getTokenAndRegister();
+    } else if (!isSignedIn) {
+      setUserDetails((prev) => ({ ...prev, token: null }));
+    }
+  }, [isSignedIn, email]);
 
   return (
     <>

@@ -1,12 +1,16 @@
 import React from 'react'
 import {Avatar, Menu} from '@mantine/core'
 import { useNavigate } from 'react-router-dom'
-const ProfileMenu = ({user, logout}) => {
+import { useUser, useClerk } from '@clerk/clerk-react'
+
+const ProfileMenu = () => {
+    const { user } = useUser()
+    const { signOut } = useClerk()
     const navigate = useNavigate()
   return (
     <Menu>
         <Menu.Target>
-            <Avatar src={user?.picture} alt='user image' radius={"xl"}/>
+            <Avatar src={user?.imageUrl} alt='user image' radius={"xl"} style={{ cursor: 'pointer' }}/>
         </Menu.Target>
         <Menu.Dropdown>
             <Menu.Item onClick={()=> navigate("./favourites", {replace: true})}>
@@ -19,7 +23,7 @@ const ProfileMenu = ({user, logout}) => {
 
             <Menu.Item onClick={()=>{
                 localStorage.clear();
-                logout()
+                signOut();
             }}>
                 Logout
             </Menu.Item>

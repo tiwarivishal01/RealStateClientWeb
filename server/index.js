@@ -25,3 +25,10 @@ app.listen(PORT, ()=> {
 
 app.use('/api/user', userRoute)
 app.use("/api/residency", residencyRoute)
+
+// Error handling middleware to catch unauthenticated or other errors
+app.use((err, req, res, next) => {
+    console.error(err.message || err);
+    const status = err.status || 401;
+    res.status(status).send({ error: err.message || "Unauthenticated" });
+});
