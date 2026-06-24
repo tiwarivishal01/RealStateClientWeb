@@ -1,71 +1,55 @@
-# Getting Started with Create React App
+# YourFutureHome - Frontend Client
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the frontend component of **YourFutureHome**, a modern real estate booking application. It is bootstrapped with Vite + React.
 
-## Available Scripts
+## Technology Stack
 
-In the project directory, you can run:
+- **Core**: React (v18)
+- **Tooling**: Vite (v4) for ultra-fast bundling and HMR
+- **UI Framework & Styling**: 
+  - Mantine UI Core & Dates (v6) for modals, inputs, and layout components
+  - Framer Motion for elegant sliding animations and transitions
+  - Swiper React for smooth listing carousels
+  - React Icons for modern UI symbols
+- **Data Fetching & State**:
+  - React Query (v3) for server-state caching, synchronization, and refetching
+  - Axios for REST client calls
+  - React Toastify for user feedback notifications
+- **Authentication**:
+  - Auth0 React SDK for secure sign-in, signup, and token-based OAuth authorization
+- **Maps Integration**:
+  - React Leaflet for interactive map components, geocoding, and property markers
 
-### `npm start`
+## Installation & Setup
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+1. **Install Dependencies**:
+   Ensure you have Node.js installed, then execute in this directory:
+   ```bash
+   npm install
+   ```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+2. **Vite Configurations**:
+   The Vite dev server starts on port `5173`. Make sure the backend server (port `8000`) is running, as API calls are routed via `http://localhost:8000/api`.
 
-### `npm test`
+3. **Run Development Server**:
+   ```bash
+   npm run dev
+   ```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+4. **Build Production Bundle**:
+   ```bash
+   npm run build
+   ```
 
-### `npm run build`
+5. **Preview Production Build**:
+   ```bash
+   npm run preview
+   ```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Key Files
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed !!!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
+- `src/main.jsx`: Renders the React root and wraps the application inside `Auth0Provider` and `BrowserRouter`.
+- `src/App.jsx`: Sets up React Query client, global user context, toast containers, and route definitions.
+- `src/utils/api.js`: Contains all Axios instance creation and backend API endpoints (Register User, Book Visit, Add Property, Favorites).
+- `src/components/Header/Header.jsx`: Stylized header brand logo and navigation menu.
+- `src/components/UploadImage/UploadImage.jsx`: Multi-step form step for uploading property images (includes fallback default image support).
